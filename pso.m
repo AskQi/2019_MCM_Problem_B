@@ -602,15 +602,11 @@ end
 % Wrap up
 % -------------------------------------------------------------------------
 if options.Verbosity > 0
-    %f_res=xOpt(1)*xOpt(2)/(xOpt(2)+xOpt(3));
     if exitflag == -1
-        fprintf('\nBest point found: %s\nRes=%s\n\n',mat2str(xOpt,5),fval)
+        fprintf('\nBest point found: %s\n\n',mat2str(xOpt,5))
     else
-        fprintf('\nFinal best point: %s\nRes=%s\n\n',mat2str(xOpt,5),fval)
+        fprintf('\nFinal best point: %s\n\n',mat2str(xOpt,5))
     end
-    %Defined by Qida @ 2019/1/23 15:46:00
-    %outputStr = [xOpt,f_res];
-    %output2file(outputStr);
 end % if options.Verbosity
 
 if strcmpi(options.UseParallel,'always') && ~poolalreadyopen

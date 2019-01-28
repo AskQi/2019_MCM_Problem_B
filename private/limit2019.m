@@ -4,8 +4,8 @@ global km2px_bili bw_obstacle bw_port airplane_radio_px drug_number_needs_in_por
 % fprintf('limits\n');
 limit_x_large_than_1 = 1-x;
 % x=int32(x);
-radio_osi_1_scan_km=26.3;
-radio_osi_1_scan_px = km2px_bili*radio_osi_1_scan_km;
+% radio_osi_1_scan_km=26.3;
+% radio_osi_1_scan_px = km2px_bili*radio_osi_1_scan_km;
 % % 无人机能够到达的位置
 osi_1_x=x(1);
 osi_1_y=x(2);
@@ -37,12 +37,12 @@ port_3=[966 453];
 port_4=[1002 240];
 port_5=[1334 346];
 
-port_1_scan_limit = norm(port_1-osi_1_canshu)-radio_osi_1_scan_px;
-port_2_scan_limit_1 = norm(port_2-osi_2_canshu)-radio_osi_1_scan_px;
-port_2_scan_limit_2 = norm(port_4-osi_2_canshu)-radio_osi_1_scan_px;
-port_3_scan_limit_1 = norm(port_3-osi_3_canshu)-radio_osi_1_scan_px;
-port_3_scan_limit_2 = norm(port_5-osi_3_canshu)-radio_osi_1_scan_px;
-port_scan_arrival_limit = [port_1_scan_limit,port_2_scan_limit_1,port_2_scan_limit_2,port_3_scan_limit_1,port_3_scan_limit_2];
+% port_1_scan_limit = norm(port_1-osi_1_canshu)-radio_osi_1_scan_px;
+% port_2_scan_limit_1 = norm(port_2-osi_2_canshu)-radio_osi_1_scan_px;
+% port_2_scan_limit_2 = norm(port_4-osi_2_canshu)-radio_osi_1_scan_px;
+% port_3_scan_limit_1 = norm(port_3-osi_3_canshu)-radio_osi_1_scan_px;
+% port_3_scan_limit_2 = norm(port_5-osi_3_canshu)-radio_osi_1_scan_px;
+% port_scan_arrival_limit = [port_1_scan_limit,port_2_scan_limit_1,port_2_scan_limit_2,port_3_scan_limit_1,port_3_scan_limit_2];
 all_send_airplane_types=osi_airplane_number_send>0;
 % all_send_airplane_radios=zeros(size(all_send_airplane_types));
 airplane_radio_bw_px=[

@@ -21,12 +21,13 @@ drug_size = [
     5 8 5
     12 7 4];
 drug_number_needs_in_port_daily = [
-    1 0 1
-    2 0 1
-    1 1 0
+    1 0 0
     2 1 2
-    1 0 0];
-%B-G
+    1 1 0
+    2 0 1
+    1 0 1
+    ];
+
 airplane_radio_km=[
     26.33333333
     9

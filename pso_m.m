@@ -151,7 +151,9 @@ if useAutoRetry
         
     end
 else
-    [xOpt,fval,exitflag,output,population,scores] = pso(problem)
+    [xOpt,fval,exitflag,output,population,scores] = pso(problem);
+    xOpt
+    fval
 end
 
 %

@@ -1,0 +1,50 @@
+function  t=timecost(A_1,B_1,C_1,D_1,E_1,F_1,G_1,A_2,B_2,C_2,D_2,E_2,F_2,G_2,X_osi,Y_osi,osi_i,bili)
+global jingwei2px_bili
+%Lsum=26186公里;
+%充电需要65分钟;
+Lsum=26186;
+flytime=[35,40,35,18,15,24,16];
+v=[40,79,64,60,60,79,64]/60;
+V_aver1=(sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1].*v))/sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1]);
+V_aver2=(sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2].*v))/sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2]);
+T_aver=(sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2].*flytime))/sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2]);
+%单位：KM/MIN
+v_aver=(v*flytime')/(flytime+65);
+if(iso_i>3)
+    warn("iso_i错误")
+    return;
+end
+if(osi_i==1)
+    X_port=[66.73]*jingwei2px_bili;
+    Y_port=[18.47]*jingwei2px_bili;
+end
+if(osi_i==2)
+    X_port=[66.16,66.03]*jingwei2px_bili;
+    Y_port=[18.40,18.22]*jingwei2px_bili;
+end
+if(osi_i==3)
+    X_port=[66.07,65.65]*jingwei2px_bili;
+    Y_port=[18.44,18.33]*jingwei2px_bili;
+end
+L_hos=0;
+for i=1:length(X_port)
+    L_hos=L_hos+norm([X_prot(i),Y_port(i)]-[X_osi,Y_osi]);
+end
+L_road=Lsum*bili;
+times=ceil((L_road/V_aver2)/T_aver);
+averdis=getwrok(M_road,X,Y,radio,L_road,sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1,A_2,B_2,C_2,D_2,E_2,F_2,G_2],times);
+L_road=L_road+averdis;
+L_hos=L_hos*sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1],);
+run_road=0;
+run_hos=0;
+t=0;%分钟为单位;
+flag_finish=1;
+while(run<L_road)
+    run_road=run_road+V_aver2;
+    run_hos=run_hos+V_aver1;
+    if(flag_finish==1&&run_hos>=L_hos)
+        flag_finish=0;
+        V_aver2=(sum([A_1+A_2,B_1+B_2,C_1+C_2,D_1+D_2,E_1+E_2,F_1+F_2,G_1+G_2].*v))/sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1,A_2,B_2,C_2,D_2,E_2,F_2,G_2]);
+    end
+    t=t+1;
+end

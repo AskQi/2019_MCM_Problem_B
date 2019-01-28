@@ -37,7 +37,7 @@ port_2=[888 415];
 port_3=[966 453];
 port_4=[1002 240];
 port_5=[1334 346];
-failed_c=ones(12,1);
+failed_
 %这里是开关
 enable_port_scan_arrival_limit = 1;
 enable_port_send_arrival_limit = 1;
@@ -51,14 +51,14 @@ if enable_port_scan_arrival_limit
     port_3_scan_limit_2 = norm(port_5-osi_3_canshu)-radio_osi_1_scan_px;
     port_scan_arrival_limit = [port_1_scan_limit,port_2_scan_limit_1,port_2_scan_limit_2,port_3_scan_limit_1,port_3_scan_limit_2];
     if max(port_scan_arrival_limit)>0
-                c=failed_c;
+                c=1;
                 ceq=[];
                 return;
     else
 %         disp(port_scan_arrival_limit);
     end
 else
-    port_scan_arrival_limit = ones(5,1)*-1;
+    port_scan_arrival_limit = -1;
 end
 
 all_send_airplane_types=osi_airplane_number_send>0;
@@ -78,14 +78,14 @@ if enable_port_send_arrival_limit
     port_3_send_limit_2 = norm(port_5-osi_3_canshu)-min(all_send_airplane_radios_not_really_only4limimt(:,3));
     port_send_arrival_limit = [port_1_send_limit,port_2_send_limit_1,port_2_send_limit_2,port_3_send_limit_1,port_3_send_limit_2];
     if max(port_send_arrival_limit)>0
-                c=failed_c;
-                ceq=[];
-                return;
+        %         c=1;
+        %         ceq=[];
+        %         return;
     else
 %         disp(port_send_arrival_limit);
     end
 else
-    port_send_arrival_limit = ones(5,1)*-1;
+    port_send_arrival_limit = -1;
 end
 
 

@@ -76,7 +76,7 @@ jingwei_boundary_right=...
 % 由于地球是球形的，所以垂直和水平的比例尺不一样，应该分开处理。
 jingwei2px_bili_weight=bw_weight/(jingwei_boundary_right-jingwei_boundary_left);
 jingwei2px_bili_height=bw_height/(jingwei_boundary_top-jingwei_boundary_bottom);
-jingwei2px_bili = (jingwei2px_bili_weight+jingwei2px_bili_height);
+jingwei2px_bili = (jingwei2px_bili_weight+jingwei2px_bili_height)/2;
 % 五个点的坐标
 [port_px]=start_port(bw_left,bw_bottom,jingwei_boundary_left,jingwei_boundary_bottom,jingwei2px_bili_height,jingwei2px_bili_weight);
 port_px=int32(port_px);
@@ -120,7 +120,7 @@ end
 
 problem.fitnessfcn = fitnessfcn ;
 %粒子个数
-problem.nvars = 36 ;
+problem.nvars = 37 ;
 %是否自动重试
 useAutoRetry = false;
 

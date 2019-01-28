@@ -1,50 +1,79 @@
-function  t=timecost(A_1,B_1,C_1,D_1,E_1,F_1,G_1,A_2,B_2,C_2,D_2,E_2,F_2,G_2,X_osi,Y_osi,osi_i,bili)
-global jingwei2px_bili
+function  t=timecost(parame)
+global jingwei2px_bili bw_rod km2px_bili
+parame = double(parame);
+A_1=parame(1);
+B_1=parame(2);
+C_1=parame(3);
+D_1=parame(4);
+E_1=parame(5);
+F_1=parame(6);
+G_1=parame(7);
+A_2=parame(8);
+B_2=parame(9);
+C_2=parame(10);
+D_2=parame(11);
+E_2=parame(12);
+F_2=parame(13);
+G_2=parame(14);
+X_osi=parame(15);
+Y_osi=parame(16);
+osi_i=parame(17);
+radio=parame(18);
+
 %Lsum=26186公里;
 %充电需要65分钟;
-Lsum=26186;
+Lsum=509.3375;
 flytime=[35,40,35,18,15,24,16];
 v=[40,79,64,60,60,79,64]/60;
-V_aver1=(sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1].*v))/sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1]);
-V_aver2=(sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2].*v))/sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2]);
+V_aver1=(sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1].*v))/sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1])*km2px_bili;
+V_aver2=(sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2].*v))/sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2])*km2px_bili;
 T_aver=(sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2].*flytime))/sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2]);
 %单位：KM/MIN
-v_aver=(v*flytime')/(flytime+65);
-if(iso_i>3)
-    warn("iso_i错误")
+if(osi_i>3)
+    warn('iso_i错误');
     return;
 end
 if(osi_i==1)
-    X_port=[66.73]*jingwei2px_bili;
-    Y_port=[18.47]*jingwei2px_bili;
+    X_port=[66.73*60-3839]*jingwei2px_bili;
+    Y_port=[18.47*60-1078]*jingwei2px_bili;
 end
 if(osi_i==2)
-    X_port=[66.16,66.03]*jingwei2px_bili;
-    Y_port=[18.40,18.22]*jingwei2px_bili;
+    X_port=[66.16*60-3839,66.03*60-3839]*jingwei2px_bili;
+    Y_port=[18.40*60-1078,18.22*60-1078]*jingwei2px_bili;
 end
 if(osi_i==3)
-    X_port=[66.07,65.65]*jingwei2px_bili;
-    Y_port=[18.44,18.33]*jingwei2px_bili;
+    X_port=[66.07*60-3839,65.65*60-3839]*jingwei2px_bili;
+    Y_port=[18.44*60-1078,18.33*60-1078]*jingwei2px_bili;
 end
 L_hos=0;
 for i=1:length(X_port)
-    L_hos=L_hos+norm([X_prot(i),Y_port(i)]-[X_osi,Y_osi]);
+    L_hos=L_hos+norm([X_port(i),Y_port(i)]-[X_osi,Y_osi]);
 end
+[averdis,bili]=getwrok(bw_rod,X_osi,Y_osi,radio);
 L_road=Lsum*bili;
-times=ceil((L_road/V_aver2)/T_aver);
-averdis=getwrok(M_road,X,Y,radio,L_road,sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1,A_2,B_2,C_2,D_2,E_2,F_2,G_2],times);
-L_road=L_road+averdis;
-L_hos=L_hos*sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1],);
+tmes1=ceil((L_road/V_aver2)/T_aver);
+L_road=L_road+averdis*tmes1;
+L_hos=L_hos*sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1]);
+baseL_hos=L_hos;
 run_road=0;
 run_hos=0;
 t=0;%分钟为单位;
 flag_finish=1;
-while(run<L_road)
+while(run_road<L_road)
     run_road=run_road+V_aver2;
     run_hos=run_hos+V_aver1;
     if(flag_finish==1&&run_hos>=L_hos)
         flag_finish=0;
-        V_aver2=(sum([A_1+A_2,B_1+B_2,C_1+C_2,D_1+D_2,E_1+E_2,F_1+F_2,G_1+G_2].*v))/sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1,A_2,B_2,C_2,D_2,E_2,F_2,G_2]);
+        V_aver2=(sum([A_1+A_2,B_1+B_2,C_1+C_2,D_1+D_2,E_1+E_2,F_1+F_2,G_1+G_2].*v))/sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1,A_2,B_2,C_2,D_2,E_2,F_2,G_2])*km2px_bili;
+        V_aver1=0;
+    end
+    if(flag_finish==0&&mod(t,24*60)==0)
+        flag_finish=1;
+        V_aver1=(sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1].*v))/sum([A_1,B_1,C_1,D_1,E_1,F_1,G_1])*km2px_bili;
+        V_aver2=(sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2].*v))/sum([A_2,B_2,C_2,D_2,E_2,F_2,G_2])*km2px_bili;
+        L_hos=L_hos+baseL_hos;
     end
     t=t+1;
 end
+t=t/60;
+t=t*(T_aver+65/T_aver);

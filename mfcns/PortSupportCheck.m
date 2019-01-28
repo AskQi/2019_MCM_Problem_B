@@ -12,7 +12,7 @@ iso_i=RSObox_parame(8);
 flag = 1;
 % % warning('这里进行了强制输出为1');
 if(iso_i>3)
-    warning("iso_i错误");
+    warning('iso_i错误');
     return;
 end
 if(iso_i==1)

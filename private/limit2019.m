@@ -1,5 +1,5 @@
 function [c, ceq] = limit2019(x)
-global km2px_bili bw_obstacle bw_port airplane_radio_px drug_number_in_port
+global km2px_bili bw_obstacle bw_port airplane_radio_px drug_number_needs_in_port_daily
 %非线性约束
 % fprintf('limits\n');
 limit_x_large_than_1 = 1-x;
@@ -66,9 +66,9 @@ BC=osi_1_airplane_number(:,1:2);
 D=[0;0;0;];
 EFG=osi_1_airplane_number(:,3:5);
 % M1,M2,M3是在ISO点的各个药品的总数量（所有天）
-drug_number_in_iso_1=drug_number_in_port(1,:);
-drug_number_in_iso_2=drug_number_in_port(2,:)+drug_number_in_port(4,:);
-drug_number_in_iso_3=drug_number_in_port(3,:)++drug_number_in_port(5,:);
+drug_number_in_iso_1=drug_number_needs_in_port_daily(1,:);
+drug_number_in_iso_2=drug_number_needs_in_port_daily(2,:)+drug_number_needs_in_port_daily(4,:);
+drug_number_in_iso_3=drug_number_needs_in_port_daily(3,:)++drug_number_needs_in_port_daily(5,:);
 drug_number_in_iso=[drug_number_in_iso_1;drug_number_in_iso_2;drug_number_in_iso_3];
 M=drug_number_in_iso;
 % G1,G2为篮子的个数
@@ -76,14 +76,25 @@ G1=osi_1_airplane_number(:,1);
 G2=sum(osi_1_airplane_number(:,2:5),2);
 RSObox_parame=[A,BC,D,EFG,M,G1,G2];
 iso_holdable_flag=1;
-for osi_i=1:3
-    this_RSObox_parame = RSObox_parame(osi_i,:);
+port_drug_supportable_flag=1;
+for iso_i=1:3
+    this_RSObox_parame = RSObox_parame(iso_i,:);
+    %这个ISO点是否能够盛下所有的东西
     iso_i_holdable_flag=RSObox(this_RSObox_parame);
+    %这个ISO配置是否能够满足服务的医疗点的问题
+    iso_i_port_drug_supportable_flag=PortSupportCheck(this_RSObox_parame(1:7),iso_i);
     if iso_i_holdable_flag == 0
+        port_drug_supportable_flag = 0;
+        break;
+    end
+    if iso_i_port_drug_supportable_flag == 0
         iso_holdable_flag = 0;
         break;
     end
 end
 iso_holdable_limit = 0.5-iso_holdable_flag;
-c=[limit_x_large_than_1,port_scan_arrival_limit,port_send_arrival_limit,iso_holdable_limit];
+port_drug_supportable_flag = 0.5-port_drug_supportable_flag;
+c=[limit_x_large_than_1,port_send_arrival_limit,iso_holdable_limit,port_drug_supportable_flag];
+
+% c=[limit_x_large_than_1,port_scan_arrival_limit,port_send_arrival_limit,iso_holdable_limit];
 ceq = x-abs(x);

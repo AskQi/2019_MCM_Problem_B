@@ -13,13 +13,27 @@
 %%G1   8    10    14            1120    140
 %%G2   24   20    20            9600    480
 %%优先级C>A>F>G>B>E>D>G2>G1>M1>M3>M2
-function flag=RSObox(A,B,C,D,E,F,G,M1,M2,M3,G1,G2)
-flag = 1;
-% % warning('这里进行了强制输出为1');
-return;
+function flag=RSObox(RSObox_parame)
+A=RSObox_parame(1);
+B=RSObox_parame(2);
+C=RSObox_parame(3);
+D=RSObox_parame(4);
+E=RSObox_parame(5);
+F=RSObox_parame(6);
+G=RSObox_parame(7);
+M1=RSObox_parame(8);
+M2=RSObox_parame(9);
+M3=RSObox_parame(10);
+G1=RSObox_parame(11);
+G2=RSObox_parame(12);
+% flag = 1;
+% % % warning('这里进行了强制输出为1');
+% return;
+
 BR=[C,A,F,G,B,E,D,G2,G1,M1,M3,M2];
+BR=double(BR);
 V_0=[90000,50625,40000,17408,19800,13500,12500,9600,1120,490,200,336];
-V_sum=BR*V_0';
+V_sum=BR*(V_0');
 V_osi=1997688;
 L=[60,45,40,32,30,25,25,24,8,14,12,5];
 W=[50,45,40,32,30,20,20,20,10,7,7,8];

@@ -4,7 +4,7 @@ close all force;
 global flag_success_arrived flag_moutain_unreachable flag_rod flag_rod_arrived flag_port flag_blank flag_iso
 global bw_rod bw_obstacle bw_port bw_help bw_arrived_rod
 global jingwei2px_bili_weight jingwei2px_bili_height jingwei2px_bili
-global jingwei2km_bili km2px_bili drug_size drug_number_in_port airplane_radio_px
+global jingwei2km_bili km2px_bili drug_size drug_number_needs_in_port_daily airplane_radio_px
 global f_max
 f_max=10;
 jingwei2km_bili=11/6;
@@ -20,7 +20,7 @@ drug_size = [
     14 7 5
     5 8 5
     12 7 4];
-drug_number_in_port = [
+drug_number_needs_in_port_daily = [
     1 0 1
     2 0 1
     1 1 0
@@ -34,10 +34,6 @@ airplane_radio_km=[
     15.8
     8.533333333];
 airplane_radio_px=(km2px_bili*airplane_radio_km)';
-% 是否绘制图形
-showpic = false;
-% 是否进行PSO
-makepso = true;
 root_dir ='E:\Important\MatLab\2019_MCM_Problem_B' ;
 rod_imgdir =[root_dir,'\imgs\'];
 rod_imgname ='rod.jpg';
@@ -120,32 +116,41 @@ end
 problem.fitnessfcn = fitnessfcn ;
 %粒子个数
 problem.nvars = 36 ;
+%是否自动重试
+useAutoRetry = false;
 
-resize_pop = 0.5+rand(1);
-resize_generate = 0.5+rand(1);
-generat = int32(problem.options.Generations*resize_generate)
-pop = int32(problem.options.PopulationSize*resize_pop)
-problem.options.Generations = generat;
-problem.options.PopulationSize = pop;
-% [xOpt,fval,exitflag,output,population,scores] = pso(problem)
-try
-    [xOpt,fval,exitflag,output,population,scores] = pso(problem);
-    xOpt
-    fval
-catch ErrorInfo %捕获到的错误是一个MException对象
-    disp(ErrorInfo);
-    disp(ErrorInfo.identifier);
-    disp(ErrorInfo.message);
-    disp(ErrorInfo.stack);
-    disp(ErrorInfo.cause);
-    %发生错误时的其他动作
-    % 重启当前程序
-    clc;
-    clear all;
-    close all force;
-    pso_m
+if useAutoRetry
+    resize_pop = 0.5+rand(1);
+    resize_generate = 0.5+rand(1);
+    generat = int32(problem.options.Generations*resize_generate)
+    pop = int32(problem.options.PopulationSize*resize_pop)
+    problem.options.Generations = generat;
+    problem.options.PopulationSize = pop;
     
+    try
+        [xOpt,fval,exitflag,output,population,scores] = pso(problem);
+        xOpt
+        fval
+    catch ErrorInfo %捕获到的错误是一个MException对象
+        disp(ErrorInfo);
+        disp(ErrorInfo.identifier);
+        disp(ErrorInfo.message);
+        disp(ErrorInfo.stack);
+        disp(ErrorInfo.cause);
+        %发生错误时的其他动作
+        % 重启当前程序
+        clc;
+        clear all;
+        close all force;
+        pso_m
+        
+    end
+else
+    [xOpt,fval,exitflag,output,population,scores] = pso(problem)
 end
+
+%
+
 %     %粒子定义
 %     osi_1_x=x(1);
 %     osi_1_y=x(2);
@@ -153,6 +158,7 @@ end
 %     osi_2_y=x(4);
 %     osi_3_x=x(5);
 %     osi_3_y=x(6);
+% B C E F G
 %     osi_1_airplane_number_send = x(7:11);
 %     osi_1_airplane_number_scan = x(12:16);
 %     osi_2_airplane_number_send = x(17:21);

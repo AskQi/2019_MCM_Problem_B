@@ -34,7 +34,7 @@ airplane_radio_km=[
     15.8
     8.533333333];
 airplane_radio_px=(km2px_bili*airplane_radio_km)';
-root_dir ='E:\Important\MatLab\2019_MCM_Problem_B' ;
+root_dir = pwd ;
 rod_imgdir =[root_dir,'\imgs\'];
 rod_imgname ='rod.jpg';
 obstacle_imgdir =rod_imgdir;

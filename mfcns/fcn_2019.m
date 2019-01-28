@@ -21,19 +21,19 @@ if strcmp(x,'init')
     %     osi_1_x osi_1_y osi_2_x osi_2_y osi_3_x osi_3_y
     iso_position_LB=[200 200 400 150 800  200];
     iso_position_UB=[800 400 900 500 1300 500];
-    %     iso_position_LB=[1   1 1  1 1 1];
-    %     iso_position_UB=[1334 1334 1334 1334 1334 1334];
+%         iso_position_LB=[1    1    1    1    1    1];
+%         iso_position_UB=[1334 1334 1334 1334 1334 1334];
     %     osi_1_send osi_1_scan osi_2_send osi_2_scan osi_3_send osi_3_scan
     osi_1_send_LB=[0 0 0 0 0];
-    osi_1_send_UB=[9 9 9 9 9];
+    osi_1_send_UB=[1 1 1 1 1];
     osi_1_scan_LB=[0 0 0 0 0];
-    osi_1_scan_UB=[0 9 9 9 9];
+    osi_1_scan_UB=[0 1 1 1 1];
     osi_2_send_LB=[0 0 0 0 0];
-    osi_2_send_UB=[9 9 9 9 9];
+    osi_2_send_UB=[1 1 1 1 1];
     osi_2_scan_LB=[0 0 0 0 0];
-    osi_2_scan_UB=[0 9 9 9 9];
+    osi_2_scan_UB=[0 1 1 1 1];
     osi_3_send_LB=[0 0 0 0 0];
-    osi_3_send_UB=[9 9 9 9 9];
+    osi_3_send_UB=[1 1 1 1 1];
     osi_3_scan_LB=[0 0 0 0 0];
     osi_3_scan_UB=[0 9 9 9 9];
     osi_airplane_number_send_LB = [osi_1_send_LB,osi_1_scan_LB,osi_2_send_LB,osi_2_scan_LB,osi_3_send_LB,osi_3_scan_LB];
@@ -46,11 +46,11 @@ if strcmp(x,'init')
     %     f.nonlcon = [] ; % Could also use 'heart' or 'unitdisk'
     f.options=[];
     %     ´úÊý
-    f.options.Generations = 50;
+    f.options.Generations = 5;
     f.nonlcon = 'limit2019';
     
 %     f.options.ConstrBoundary = 'penalize';
-    f.options.PopulationSize = 100;
+    f.options.PopulationSize = 200;
     f.options.UseParallel = 'never';
 else
     x=int32(x);

@@ -2,11 +2,15 @@ clc;
 clear all;
 close all force;
 global flag_success_arrived flag_moutain_unreachable flag_rod flag_rod_arrived flag_port flag_blank flag_iso
-global bw_rod bw_obstacle bw_port bw_help bw_arrived_rod
+global bw_rod bw_obstacle bw_port bw_help bw_arrived_rod airplane_radios_replace_0_only4limit
 global jingwei2px_bili_weight jingwei2px_bili_height jingwei2px_bili
 global jingwei2km_bili km2px_bili drug_size drug_number_needs_in_port_daily airplane_radio_px
-global f_max
-f_max=10;
+global f_max f_max_port_not_enough f_max_port_drug_unsupportable f_max_iso_holdable_flag
+f_max = 10;
+% f_max_port_not_enough=20;
+% f_max_port_drug_unsupportable=10;
+% f_max_iso_holdable_flag=5;
+airplane_radios_replace_0_only4limit = 500;
 jingwei2km_bili=11/6;
 km2px_bili=15.5*6/11;
 flag_moutain_unreachable = -1;

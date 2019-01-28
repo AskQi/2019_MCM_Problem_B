@@ -1,7 +1,14 @@
 % 输入：无人机编队，ISO编号
 % 输出：可否同时满足本ISO服务的医疗点的需求
-function flag=PortSupportCheck(A,B,C,D,E,F,G,iso_i)
-
+function flag=PortSupportCheck(RSObox_parame)
+A=RSObox_parame(1);
+B=RSObox_parame(2);
+C=RSObox_parame(3);
+D=RSObox_parame(4);
+E=RSObox_parame(5);
+F=RSObox_parame(6);
+G=RSObox_parame(7);
+iso_i=RSObox_parame(8);
 flag = 1;
 % % warning('这里进行了强制输出为1');
 if(iso_i>3)
